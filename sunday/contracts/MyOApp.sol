@@ -6,6 +6,8 @@ import { Ownable } from "@openzeppelin/contracts/access/Ownable.sol";
 import { OApp, MessagingFee, Origin } from "@layerzerolabs/lz-evm-oapp-v2/contracts/oapp/OApp.sol";
 import { MessagingReceipt } from "@layerzerolabs/lz-evm-oapp-v2/contracts/oapp/OAppSender.sol";
 
+import "hardhat/console.sol";
+
 contract MyOApp is OApp {
     constructor(address _endpoint, address _delegate) OApp(_endpoint, _delegate) Ownable(_delegate) {}
 
@@ -42,6 +44,8 @@ contract MyOApp is OApp {
         bytes memory _options,
         bool _payInLzToken
     ) public view returns (MessagingFee memory fee) {
+        console.log("OR MAYBE HERE?");
+        require(_dstEid != 0, "Invalid _dstEid");
         bytes memory payload = abi.encode(_message);
         fee = _quote(_dstEid, payload, _options, _payInLzToken);
     }
